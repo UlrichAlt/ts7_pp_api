@@ -71,11 +71,30 @@ namespace Beispiel2
             AddToColl(gew_projekt.Id, documentBox.Items);
         }
 
+        private string StripInstanceNumber(string str)
+        {
+            return str.Substring(0, str.LastIndexOf('<') - 1);
+        }
+
+        private void ToolDebug(DocumentId doc)
+        {
+            var tools = TopSolidCamHost.Documents.GetTools(doc, false);
+            foreach (ElementId id in tools)
+            {
+                var plist = TopSolidCamHost.Parameters.GetParameters(new ElementExId(id)).Select((pid) => $"{TopSolidCamHost.Parameters.GetName(pid)}={TopSolidCamHost.Parameters.ToStringValue(pid)}");
+            }
+        }
+
         private void documentBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (documentBox.SelectedItem != null)
             {
                 var doc_id = TopSolidHost.Documents.GetDocument((documentBox.SelectedItem as PdmItem).Id);
+                ToolDebug(doc_id);
+
+                var toolsElts = TopSolidCamHost.Documents.GetTools(doc_id, false).Select<ElementId, string>(
+                    (elem_id) => (TopSolidCamHost.Parameters.GetNamedValue(new ElementExId(elem_id), "$TopSolid.Cam.NC.Kernel.DB.Tools.Entities.Tool.ToolDescription") as SmartText).Value);
+
                 var elts = TopSolidHost.Elements.GetElements(doc_id);
 
                 var environElts = elts.Where(
@@ -84,7 +103,8 @@ namespace Beispiel2
 
                 var assyElts = elts.Where(
                     (elt) => TopSolidHost.Elements.GetTypeFullName(elt) == "TopSolid.Cad.Design.DB.AssemblyEntity").Select(
-                    (elt) => TopSolidHost.Elements.GetFriendlyName(elt));
+                    (elt) => StripInstanceNumber(TopSolidHost.Elements.GetFriendlyName(elt))).
+                    Except(toolsElts);
 
                 coscomInfo.Text = $"Einbezogene Elemente:\n{assyElts.Aggregate("", (ass, elt) => $"{ass}\n{elt}")}\n\nWerkstückumgebung:\n{environElts.Aggregate("", (ass, elt) => $"{ass}\n{elt}")}";
             }
