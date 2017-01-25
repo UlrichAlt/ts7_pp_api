@@ -88,7 +88,7 @@ namespace Beispiel2
                     }
                     TopSolidHost.Application.EndModification(true, true);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     TopSolidHost.Application.EndModification(false, false);
                 }
@@ -244,8 +244,5 @@ namespace Beispiel2
             }
         }
 
-        private void paramGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-        }
     }
 }

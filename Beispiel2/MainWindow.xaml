@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Beispiel2"
         mc:Ignorable="d"
-        Title="TopSolid Project Manager" Height="350" Width="801.831" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
+        Title="TopSolid Project Manager" Height="575.984" Width="1201.208" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Label x:Name="label" Content="Projekte" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Dokumente" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top"/>
         <ListBox x:Name="projectBox" HorizontalAlignment="Left" Height="270" Margin="10,42,0,0" VerticalAlignment="Top" Width="230" Loaded="projectBox_Loaded" SelectionChanged="projectBox_SelectionChanged" DisplayMemberPath="Name"/>
         <ListBox x:Name="documentBox" HorizontalAlignment="Left" Height="203" Margin="280,42,0,0" VerticalAlignment="Top" Width="230" DisplayMemberPath="Name" SelectionChanged="documentBox_SelectionChanged"/>
         <Button x:Name="button" Content="Öffnen" HorizontalAlignment="Left" Margin="280,260,0,0" VerticalAlignment="Top" Width="230" Height="47" Click="button_Click" IsEnabled="False" />
-        <DataGrid x:Name="paramGrid" HorizontalAlignment="Left" Margin="541,42,0,0" VerticalAlignment="Top" Height="203" Width="246" ItemsSource="{Binding}" CellEditEnding="paramGrid_CellEditEnding"/>
+        <DataGrid x:Name="paramGrid" HorizontalAlignment="Left" Margin="541,42,0,0" VerticalAlignment="Top" Height="203" Width="490" ItemsSource="{Binding}" />
         <Label x:Name="label2" Content="Parameter" HorizontalAlignment="Left" Margin="541,16,0,0" VerticalAlignment="Top"/>
         <Button x:Name="export" Content="Export Parasolid" HorizontalAlignment="Left" Margin="541,260,0,0" VerticalAlignment="Top" Width="230" Height="47" Click="export_Click" />
     </Grid>

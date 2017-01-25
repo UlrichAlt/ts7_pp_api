@@ -58,15 +58,9 @@ namespace Beispiel3
                 List<string> log;
                 List<DocumentId> bad_ids;
 
-                if (!TopSolidHost.Application.StartModification("Importing data", true)) return;
                 // Importieren mit den Standardeinstellungen
-                try
-                {
-                    TopSolidHost.Pdm.EnsureIsDirty(lib_id);
-                    var good_ids = TopSolidHost.Documents.Import(imp_id, filenameBox.Text,
-                    lib_id, out log, out bad_ids);
-                    TopSolidHost.Application.EndModification(true, true);
-                }
+                var good_ids = TopSolidHost.Documents.Import(imp_id, filenameBox.Text, lib_id, out log, out bad_ids);
+
                 // Mögliche Optionen eines Importers abfragen
                 // var importOptions = TopSolidHost.Application.GetImporterOptions(imp_id);
 
@@ -94,12 +88,6 @@ namespace Beispiel3
                 //        TopSolidHost.Documents.Close(doc, false, true);
                 //    }
                 //}
-                catch (Exception e)
-                {
-                    TopSolidHost.Application.EndModification(false, false);
-                    //TODO: Warum kommt hier ein Fehler?
-                    MessageBox.Show(e.ToString());
-                }
             }
 
             TopSolidHost.Disconnect();
